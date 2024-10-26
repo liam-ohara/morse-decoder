@@ -1,5 +1,6 @@
 package liamohara.controller;
 
+import liamohara.exception.InvalidMorseException;
 import liamohara.service.DecoderServiceImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -54,5 +55,21 @@ class DecoderControllerTest {
         verify(mockDecoderServiceImpl, times(1)).decode(morseCode);
 
         assertEquals("S", result);
+    }
+
+    @Test
+    @DisplayName("Returns invalid morse code error message when provided with invalid morse code string")
+    void testDecode_WhenProvidedWithInvalidMorseCodeString() {
+
+        String invalidMorseCode = "12 drummers drumming";
+
+        when(mockDecoderServiceImpl.decode(invalidMorseCode)).thenThrow(new InvalidMorseException(invalidMorseCode));
+
+        String result = decoderController.decode(invalidMorseCode);
+
+        verify(mockDecoderServiceImpl, times(1)).decode(invalidMorseCode);
+
+        assertEquals("\"12 drummers drumming\" is invalid morse code.", result);
+
     }
 }
