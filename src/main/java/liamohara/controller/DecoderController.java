@@ -7,6 +7,7 @@ public class DecoderController {
     DecoderService decoderService;
 
     public String decode(String morseCode) {
-        return "";
+
+        return decoderService.decode(morseCode);
     }
 }
