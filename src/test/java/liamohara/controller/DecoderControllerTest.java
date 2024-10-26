@@ -40,4 +40,19 @@ class DecoderControllerTest {
 
         assertEquals("", result);
     }
+
+    @Test
+    @DisplayName("Returns S when provided with morse code string ...")
+    void testDecode_WhenProvidedWithMorseCodeForCharacterS() {
+
+        String morseCode = "...";
+
+        when(mockDecoderServiceImpl.decode(morseCode)).thenReturn("S");
+
+        String result = decoderController.decode(morseCode);
+
+        verify(mockDecoderServiceImpl, times(1)).decode(morseCode);
+
+        assertEquals("S", result);
+    }
 }
