@@ -6,6 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -23,7 +24,6 @@ class DecoderServiceImplTest {
     public void setUp() throws Exception {
 
         MockitoAnnotations.initMocks(this);
-//        mockMorseDictionary = new MorseDictionary();
     }
 
     @Test
@@ -39,5 +39,20 @@ class DecoderServiceImplTest {
         verify(mockMorseDictionary, times(0)).getLatin(morseCode);
 
         assertEquals("", result);
+    }
+
+    @Test
+    @DisplayName("Returns S when provided with morse code string ...")
+    void testDecode_WhenProvidedWithMorseCodeForCharacterS() {
+
+        String morseCode = "...";
+
+        when(mockMorseDictionary.getLatin(morseCode)).thenReturn("S");
+
+        String result = decoderServiceImpl.decode(morseCode);
+
+        verify(mockMorseDictionary, times(1)).getLatin(morseCode);
+
+        assertEquals("S", result);
     }
 }
