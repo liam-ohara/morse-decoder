@@ -8,11 +8,17 @@ public class DecoderServiceImpl implements DecoderService {
 
     @Override
     public String decode(String morseCode) {
-        String decodedMorse;
+        StringBuilder decodedMorse = new StringBuilder();
 
         if (!(morseCode.isEmpty())) {
-            decodedMorse = morseDictionary.getLatin(morseCode);
-            return decodedMorse;
+
+            String[] morseArray = morseCode.split("\\s");
+
+            for (int i = 0; i < morseArray.length; i++) {
+                decodedMorse.append(morseDictionary.getLatin(morseArray[i]));
+            }
+
+            return decodedMorse.toString();
         }
         return "";
     }

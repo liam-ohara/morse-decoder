@@ -55,4 +55,25 @@ class DecoderServiceImplTest {
 
         assertEquals("S", result);
     }
+
+    @Test
+    @DisplayName("Returns SOS when provided with morse code string ... --- ...")
+    void testDecode_WhenProvidedWithMorseCodeForWordSOS() {
+
+        String morseCode = "... --- ...";
+        String morseCodeS = "...";
+        String morseCodeO = "---";
+        String decoded = "SOS";
+
+        when(mockMorseDictionary.getLatin(morseCodeS)).thenReturn("S");
+        when(mockMorseDictionary.getLatin(morseCodeO)).thenReturn("O");
+
+        String result = decoderServiceImpl.decode(morseCode);
+
+        verify(mockMorseDictionary, times(2)).getLatin(morseCodeS);
+        verify(mockMorseDictionary, times(1)).getLatin(morseCodeO);
+
+        assertEquals(decoded, result);
+
+    }
 }
