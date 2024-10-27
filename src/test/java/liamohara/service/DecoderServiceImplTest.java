@@ -1,5 +1,6 @@
 package liamohara.service;
 
+import liamohara.exception.InvalidMorseException;
 import liamohara.model.MorseDictionary;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -76,4 +77,49 @@ class DecoderServiceImplTest {
         assertEquals(decoded, result);
 
     }
+
+    @Test
+    @DisplayName("Returns 'SOS NOW PLEASE.' when provided with morse code string ... --- ...")
+    void testDecode_WhenProvidedWithMorseCodeForSentenceSOSNOWPLEASE() {
+
+        String morseCode = "... --- ...   -. --- .--   .--. .-.. . .- ... . .-.-.-";
+        String morseCodeS = "...";
+        String morseCodeO = "---";
+        String morseCodeN = "-.";
+        String morseCodeW = ".--";
+        String morseCodeP = ".--.";
+        String morseCodeL = ".-..";
+        String morseCodeE = ".";
+        String morseCodeA = ".-";
+        String morseCodeStop = ".-.-.-";
+
+        String decoded = "SOS NOW PLEASE.";
+
+        when(mockMorseDictionary.getLatin(morseCodeS)).thenReturn("S");
+        when(mockMorseDictionary.getLatin(morseCodeO)).thenReturn("O");
+        when(mockMorseDictionary.getLatin(morseCodeN)).thenReturn("N");
+        when(mockMorseDictionary.getLatin(morseCodeW)).thenReturn("W");
+        when(mockMorseDictionary.getLatin(morseCodeP)).thenReturn("P");
+        when(mockMorseDictionary.getLatin(morseCodeL)).thenReturn("L");
+        when(mockMorseDictionary.getLatin(morseCodeE)).thenReturn("E");
+        when(mockMorseDictionary.getLatin(morseCodeA)).thenReturn("A");
+        when(mockMorseDictionary.getLatin(morseCodeStop)).thenReturn(".");
+
+        String result = decoderServiceImpl.decode(morseCode);
+
+        verify(mockMorseDictionary, times(3)).getLatin(morseCodeS);
+        verify(mockMorseDictionary, times(2)).getLatin(morseCodeO);
+        verify(mockMorseDictionary, times(1)).getLatin(morseCodeN);
+        verify(mockMorseDictionary, times(1)).getLatin(morseCodeW);
+        verify(mockMorseDictionary, times(1)).getLatin(morseCodeP);
+        verify(mockMorseDictionary, times(1)).getLatin(morseCodeL);
+        verify(mockMorseDictionary, times(2)).getLatin(morseCodeE);
+        verify(mockMorseDictionary, times(1)).getLatin(morseCodeA);
+        verify(mockMorseDictionary, times(1)).getLatin(morseCodeStop);
+
+        assertEquals(decoded, result);
+
+    }
+
+
 }

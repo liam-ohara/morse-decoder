@@ -12,10 +12,14 @@ public class DecoderServiceImpl implements DecoderService {
 
         if (!(morseCode.isEmpty())) {
 
-            String[] morseArray = morseCode.split("\\s");
+            String[] morseArray = morseCode.split("\\s{1,2}");
 
             for (int i = 0; i < morseArray.length; i++) {
-                decodedMorse.append(morseDictionary.getLatin(morseArray[i]));
+                if (!(morseArray[i].isEmpty())) {
+                    decodedMorse.append(morseDictionary.getLatin(morseArray[i]));
+                } else {
+                    decodedMorse.append(" ");
+                }
             }
 
             return decodedMorse.toString();
