@@ -50,7 +50,7 @@ public record MorseDictionary() {
         morseLatin.put("-.--.-", ")");
     }
 
-    public static String getLatin (String morseCharacter) {
+    public String getLatin (String morseCharacter) {
         return morseLatin.get(morseCharacter);
     }
 }
