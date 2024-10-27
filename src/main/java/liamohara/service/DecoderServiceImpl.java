@@ -1,5 +1,6 @@
 package liamohara.service;
 
+import liamohara.exception.InvalidMorseException;
 import liamohara.model.MorseDictionary;
 
 public class DecoderServiceImpl implements DecoderService {
@@ -12,18 +13,26 @@ public class DecoderServiceImpl implements DecoderService {
 
         if (!(morseCode.isEmpty())) {
 
-            String[] morseArray = morseCode.split("\\s{1,2}");
+            if (morseCode.matches("[^.\\-\\s]*")) {
+                throw new InvalidMorseException(morseCode);
 
-            for (int i = 0; i < morseArray.length; i++) {
-                if (!(morseArray[i].isEmpty())) {
-                    decodedMorse.append(morseDictionary.getLatin(morseArray[i]));
-                } else {
-                    decodedMorse.append(" ");
+            } else {
+
+                String[] morseArray = morseCode.split("\\s{1,2}");
+
+                for (int i = 0; i < morseArray.length; i++) {
+                    if (!(morseArray[i].isEmpty())) {
+                        decodedMorse.append(morseDictionary.getLatin(morseArray[i]));
+
+                    } else {
+                        decodedMorse.append(" ");
+                    }
                 }
-            }
 
-            return decodedMorse.toString();
+                return decodedMorse.toString();
+            }
         }
+
         return "";
     }
 }

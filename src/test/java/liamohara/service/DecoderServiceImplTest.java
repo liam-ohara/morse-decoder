@@ -121,5 +121,13 @@ class DecoderServiceImplTest {
 
     }
 
+    @Test
+    @DisplayName("Throws InvalidMorseException when provided with string that is invalid morse")
+    void testDecode_WhenProvidedWithStringOfInvalidMorse() {
+
+        String invalidMorse = "SOS";
+
+        assertThrowsExactly(InvalidMorseException.class, () -> decoderServiceImpl.decode(invalidMorse));
+    }
 
 }
