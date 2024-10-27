@@ -5,7 +5,7 @@ import liamohara.model.MorseDictionary;
 
 public class DecoderServiceImpl implements DecoderService {
 
-    MorseDictionary morseDictionary;
+    MorseDictionary morseDictionary = new MorseDictionary();
 
     @Override
     public String decode(String morseCode) {
